@@ -22,6 +22,10 @@ class CardAddController extends GetxController{
     _scannedStringBarCode="No barcode scanned";
     update();
   }
+  void setControllerData(){
+    _scannedStringBarCode=_memberIdController.text.toString();
+    update();
+  }
 
   void setScanBarCode(BarcodeCapture barcodes){
     _scanBarcode=barcodes.barcodes.firstOrNull;

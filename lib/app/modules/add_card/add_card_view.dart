@@ -73,6 +73,7 @@ class CardAddView extends StatelessWidget {
                 width: 200,
                 child: ElevatedButton(
                     onPressed: () {
+                      Get.find<CardAddController>().setControllerData();
                       Get.toNamed(RouteHelper.getSuccessfulCardView());
                     },
                     style: ElevatedButton.styleFrom(),
@@ -132,17 +133,17 @@ class CardAddView extends StatelessWidget {
                   alignment: PlaceholderAlignment.baseline,
                   baseline: TextBaseline.alphabetic,
                   child: LinkButton(
-                      urlLabel: "This is link", url: "https://www.google.com"),
+                      urlLabel: "This is Google link", url: "https://www.google.com"),
                 ),
                 TextSpan(
-                  text: ' blah blah ',
+                  text: ' some text some text some text ',
                 ),
                 WidgetSpan(
                   style: TextStyle(decoration: TextDecoration.underline),
                   alignment: PlaceholderAlignment.baseline,
                   baseline: TextBaseline.alphabetic,
                   child: LinkButton(
-                      urlLabel: "Another Link",
+                      urlLabel: "BismoService Link",
                       url: "https://www.bismoservices.com/"),
                 ),
                 TextSpan(
