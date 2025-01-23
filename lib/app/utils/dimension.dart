@@ -7,8 +7,8 @@ class Dimension{
   static double screenHeight = Get.context!.height;
   static double screenWidth = Get.context!.width;
 
-   static double barCodeContainerWidth= screenWidth/1.74;
-   static double barCodeContainerHeight= screenHeight/5.58;
+   static double barCodeContainerWidth= screenWidth/1.54;
+   static double barCodeContainerHeight= screenHeight/5.88;
 
    static double height10= screenHeight/82.69;
    static double width10= screenWidth/39.27;

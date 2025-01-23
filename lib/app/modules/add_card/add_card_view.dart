@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/app_images.dart';
 
@@ -80,29 +81,34 @@ class CardAddView extends StatelessWidget {
     );
   }
 
-  GestureDetector barCodeScanButton() {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(RouteHelper.getBarCodeScan());
-      },
-      child: Row(
-        children: [
-          Container(
-            height: Dimension.height10 * 4,
-            width: Dimension.height10 * 4,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Icon(Icons.document_scanner_outlined),
+  Widget barCodeScanButton() {
+    return GetBuilder<CardAddController>(
+      builder: (controller) {
+        return GestureDetector(
+          onTap: () {
+            controller.scanBarcode();
+            // Get.toNamed(RouteHelper.getBarCodeScan());
+          },
+          child: Row(
+            children: [
+              Container(
+                height: Dimension.height10 * 4,
+                width: Dimension.height10 * 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Icon(Icons.document_scanner_outlined),
+              ),
+              SizedBox(width: Dimension.width10 * 2),
+              BigText(
+                text: "Scan your Card",
+                size: Dimension.height10 * 2.25,
+              ),
+            ],
           ),
-          SizedBox(width: Dimension.width10 * 2),
-          BigText(
-            text: "Scan your Card",
-            size: Dimension.height10 * 2.25,
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 
