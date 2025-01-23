@@ -5,3 +5,9 @@ List<String> sliderCardImages=[
   AppImages.instance.creditCard1,
   AppImages.instance.creditCard2
 ];
+//
+// List<Map<String,dynamic>> houseList = [
+//   {
+//     ""
+//   }
+// ];

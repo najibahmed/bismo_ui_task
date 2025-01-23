@@ -67,7 +67,9 @@ class CardAddView extends StatelessWidget {
                 height: Dimension.height10*5,
                 width: 200,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(RouteHelper.getSuccessfulCardView());
+                    },
                     style: ElevatedButton.styleFrom(),
                     child: Text("Add to Aamar Wallet")),
               )

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class AppColor{
+  static const greenBackground=Color(0xff00643c);
+}
+
 List<Gradient> cardListGradients = [
   LinearGradient(colors: [
     Color.fromARGB(255, 235, 77, 11).withOpacity(0.3),

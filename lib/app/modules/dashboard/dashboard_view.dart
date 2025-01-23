@@ -23,13 +23,7 @@ class DashboardView extends StatelessWidget {
               child: Column(
                 children: [
                   homeHeader(),
-                  SizedBox(
-                    height: Dimension.height10,
-                  ),
                   appBanner(),
-                  SizedBox(
-                    height: Dimension.height10,
-                  ),
                 ],
               ),
             ),
@@ -71,7 +65,7 @@ class DashboardView extends StatelessWidget {
               onPageChanged: (index, reason) {
                 Get.find<DashboardController>().changeIndex(index);
               },
-              height: Dimension.height10 * 20,
+              height: Dimension.height10 * 23,
               autoPlay: true,
               // enlargeCenterPage: true,
               aspectRatio: 16 / 9,

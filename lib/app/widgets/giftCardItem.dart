@@ -28,24 +28,25 @@ class Giftcarditem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
+                height: Dimension.height10*10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: cardListGradients[index % 10],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(Dimension.height10 * 2),
+                      padding: EdgeInsets.all(Dimension.height10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: Container(
                           color: Colors.white,
                           child: Image.asset(
                             img,
-                            width: Dimension.width10 * 10,
-                            height: Dimension.height10 * 10,
+                            width: Dimension.height10 * 7,
+                            height: Dimension.height10 * 7,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -53,16 +54,12 @@ class Giftcarditem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: Dimension.height10 * 3),
-                          SizedBox(
-                            width: 150,
-                            child: BigText(
-                              text: "StarBucks",
-                              size: Dimension.height10 * 2.5,
-                            ),
+                          BigText(
+                            text: "StarBucks",
+                            size: Dimension.height10 * 2.5,
                           ),
                           SizedBox(height: Dimension.height10),
                           SmallText(
