@@ -12,7 +12,7 @@ import '../../widgets/small_text.dart';
 class CardAddView extends StatelessWidget {
   CardAddView({super.key});
 
-  TextEditingController _memberIdController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +48,23 @@ class CardAddView extends StatelessWidget {
               SizedBox(height: Dimension.height10 * 2),
               barCodeScanButton(),
               SizedBox(height: Dimension.height10 * 2),
-              TextFormField(
-                  controller: _memberIdController,
-                  decoration: const InputDecoration(
-                    labelText: "Member Id",
-                    focusedBorder: OutlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.black54, width: 2.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      // borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Colors.black26, width: 2.0),
-                    ),
-                  )),
+              GetBuilder<CardAddController>(
+                builder: (controller) {
+                  return TextFormField(
+                      controller: controller.memberIdController,
+                      decoration: const InputDecoration(
+                        labelText: "Member Id",
+                        focusedBorder: OutlineInputBorder(
+                          // borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Colors.black54, width: 2.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          // borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Colors.black26, width: 2.0),
+                        ),
+                      ));
+                }
+              ),
               SizedBox(height: Dimension.height10 * 2),
               textWithLink(),
               SizedBox(height: Dimension.height10 * 17),
@@ -86,8 +90,8 @@ class CardAddView extends StatelessWidget {
       builder: (controller) {
         return GestureDetector(
           onTap: () {
-            controller.scanBarcode();
-            // Get.toNamed(RouteHelper.getBarCodeScan());
+            controller.resetBarCode();
+            Get.toNamed(RouteHelper.getBarCodeScan());
           },
           child: Row(
             children: [

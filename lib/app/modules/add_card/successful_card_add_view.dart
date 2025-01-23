@@ -14,7 +14,7 @@ class SuccessfulCardAddView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String barcodeData = "12345678900987654321";
+
     return  Scaffold(
       backgroundColor: AppColor.greenBackground,
       body: Center(
@@ -54,10 +54,10 @@ class SuccessfulCardAddView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 300,
+                              width: Dimension.width10*24,
                               height: 100,
                               child: SvgPicture.string(
-                                controller.generateBarCode(barcodeData),
+                                controller.generateBarCode(controller.scannedBarCode),
                                 fit: BoxFit.fitWidth,
                               ), // Display SVG barcode
                             ),

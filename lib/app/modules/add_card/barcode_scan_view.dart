@@ -1,12 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
+import 'package:loyality_card_wallet/app/route/route_helper.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../utils/dimension.dart';
 import '../../widgets/big_text.dart';
 
-class BarcodeScanView extends StatelessWidget {
+class BarcodeScanView extends StatefulWidget {
   const BarcodeScanView({super.key});
 
+  @override
+  State<BarcodeScanView> createState() => _BarcodeScanViewState();
+}
+
+class _BarcodeScanViewState extends State<BarcodeScanView> {
+
+  Widget _buildBarcode(Barcode? value) {
+    if (value == null) {
+      return const Text(
+        'Place Camera to Scan!',
+        overflow: TextOverflow.fade,
+        style: TextStyle(color: Colors.white),
+      );
+    }
+    return Text(
+      value.displayValue ?? 'No display value.',
+      overflow: TextOverflow.fade,
+      style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 18),
+    );
+  }
+
+  void _handleBarcode(BarcodeCapture barcodes) {
+    if (mounted) {
+      Get.find<CardAddController>().setScanBarCode(barcodes);
+      }
+
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -35,12 +65,26 @@ class BarcodeScanView extends StatelessWidget {
               Container(
                 height: Dimension.height10 * 30,
                 width: double.maxFinite,
+                padding: EdgeInsets.all(Dimension.height10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: Colors.white)
                 ),
+                child: MobileScanner(
+                  onDetect: _handleBarcode,
+                ),
               ),
-              SizedBox(height: Dimension.height10 * 16),
+              SizedBox(height: Dimension.height10 * 5),
+              GetBuilder<CardAddController>(
+                builder: (controller) {
+                  return  Text(
+                    controller.scannedBarCode,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(color: Colors.white),
+                  );;
+                }
+              ),
+              SizedBox(height: Dimension.height10 * 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -51,14 +95,18 @@ class BarcodeScanView extends StatelessWidget {
                   SizedBox(
                     height: Dimension.height10*4,
 
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        style: ElevatedButton.styleFrom(),
-                        child: Text("Enter Manually")),
+                    child: GetBuilder<CardAddController>(
+                      builder: (controller) {
+                        return ElevatedButton(
+                            onPressed: () {
+                              Get.offNamed(RouteHelper.getCardAdd());
+                            },
+                            style: ElevatedButton.styleFrom(),
+                            child: Text(controller.isScanning?"Enter Manually":"Submit"));
+                      }
+                    ),
                   )
-                  
+
                 ],
               )
             ],
