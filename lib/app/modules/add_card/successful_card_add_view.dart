@@ -35,7 +35,7 @@ class SuccessfulCardAddView extends StatelessWidget {
                           color: Colors.white,
                           size: Dimension.height10*3,)),
                     IconButton(onPressed: (){
-                      Get.offNamed(RouteHelper.getCardAdd());
+
                     },
                         icon: Icon(Icons.more_vert,
                           color: Colors.white,
@@ -132,7 +132,7 @@ class SuccessfulCardAddView extends StatelessWidget {
                   width: Dimension.width10*20,
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.back();
+                        Get.offNamed(RouteHelper.getCardAdd());
                       },
                       style: ElevatedButton.styleFrom(),
                       child: const Text("Continue")),

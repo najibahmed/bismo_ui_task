@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/card_model.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/app_images.dart';
@@ -10,14 +11,18 @@ import '../../widgets/link_button.dart';
 import '../../widgets/small_text.dart';
 
 class CardAddView extends StatelessWidget {
-  CardAddView({super.key});
-
+  CardAddView({super.key,});
 
 
   @override
   Widget build(BuildContext context) {
+    CardModel cardModel = Get.arguments;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Get.offNamed(RouteHelper.getInitial());
+        }, icon: const Icon(Icons.arrow_back)),
+      ),
       body: SingleChildScrollView(
         child: Center(
             child: Padding(
@@ -32,16 +37,16 @@ class CardAddView extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     image: DecorationImage(
-                        image: AssetImage(AppImages.instance.starBucks),
+                        image: AssetImage(cardModel.image!),
                         fit: BoxFit.cover)),
               ),
               SizedBox(height: Dimension.height10 / 2),
               BigText(
-                text: "StarBucks",
+                text: cardModel.title!,
                 size: Dimension.height10 * 2.65,
               ),
               SmallText(
-                text: "Loyalty Card",
+                text: cardModel.cardType!,
                 size: Dimension.height10 * 1.5,
                 color: Colors.black87,
               ),
@@ -51,6 +56,10 @@ class CardAddView extends StatelessWidget {
               GetBuilder<CardAddController>(
                 builder: (controller) {
                   return TextFormField(
+                    onTapOutside: (event) {
+                      print('onTapOutside');
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
                       controller: controller.memberIdController,
                       decoration: const InputDecoration(
                         labelText: "Member Id",
@@ -71,13 +80,21 @@ class CardAddView extends StatelessWidget {
               SizedBox(
                 height: Dimension.height10*5,
                 width: 200,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Get.find<CardAddController>().setControllerData();
-                      Get.toNamed(RouteHelper.getSuccessfulCardView());
-                    },
-                    style: ElevatedButton.styleFrom(),
-                    child: Text("Add to Aamar Wallet")),
+                child: GetBuilder<CardAddController>(
+                  builder: (controller) {
+                    return ElevatedButton(
+                        onPressed: () {
+                          if (controller.memberIdController.text.isNotEmpty) {
+                            controller.setControllerData();
+                            Get.toNamed(RouteHelper.getSuccessfulCardView());
+                          }else{
+                            Get.snackbar("Empty Data", "No Coupon Code is given!",backgroundColor: Colors.redAccent.shade100);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(),
+                        child: Text("Add to Aamar Wallet"));
+                  }
+                ),
               )
             ],
           ),

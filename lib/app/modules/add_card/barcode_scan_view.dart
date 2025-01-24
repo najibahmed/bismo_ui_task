@@ -41,75 +41,82 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.black26,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimension.width10 * 2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: Dimension.height10 * 10),
-              Container(
-                height: Dimension.height10 * 8,
-                width: Dimension.height10 * 8,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    ),
-                child: Icon(Icons.document_scanner_sharp,color: Colors.white,size: Dimension.width10*5,),
-              ),
-              BigText(
-                text: "Add a Card",
-                size: Dimension.height10 * 2.65,
-                color: Colors.white,
-              ),
-              SizedBox(height: Dimension.height10 * 3),
-              Container(
-                height: Dimension.height10 * 30,
-                width: double.maxFinite,
-                padding: EdgeInsets.all(Dimension.height10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.white)
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimension.width10 * 2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: Dimension.height10 * 10),
+                Container(
+                  height: Dimension.height10 * 8,
+                  width: Dimension.height10 * 8,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      ),
+                  child: Icon(Icons.document_scanner_sharp,color: Colors.white,size: Dimension.width10*5,),
                 ),
-                child: MobileScanner(
-                  onDetect: _handleBarcode,
+                BigText(
+                  text: "Add a Card",
+                  size: Dimension.height10 * 2.65,
+                  color: Colors.white,
                 ),
-              ),
-              SizedBox(height: Dimension.height10 * 5),
-              GetBuilder<CardAddController>(
-                builder: (controller) {
-                  return  Text(
-                    controller.scannedBarCode,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(color: Colors.white),
-                  );;
-                }
-              ),
-              SizedBox(height: Dimension.height10 * 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(onPressed: (){
-                    Get.back();
-                  },
-                      child: Text("Cancle",style: TextStyle(color: Colors.white,fontSize: Dimension.height10*2),)),
-                  SizedBox(
-                    height: Dimension.height10*4,
+                SizedBox(height: Dimension.height10 * 3),
+                Container(
+                  height: Dimension.height10 * 30,
+                  width: double.maxFinite,
 
-                    child: GetBuilder<CardAddController>(
-                      builder: (controller) {
-                        return ElevatedButton(
-                            onPressed: () {
-                              Get.offNamed(RouteHelper.getCardAdd());
-                            },
-                            style: ElevatedButton.styleFrom(),
-                            child: Text(controller.isScanning?"Enter Manually":"Submit"));
-                      }
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white)
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: MobileScanner(
+                      onDetect: _handleBarcode,
                     ),
-                  )
-
-                ],
-              )
-            ],
+                  ),
+                ),
+                SizedBox(height: Dimension.height10),
+                BigText(text: "Place your BarCode Inside the Camera Window.",color: Colors.white,size: 14,),
+                SizedBox(height: Dimension.height10 * 5),
+                GetBuilder<CardAddController>(
+                  builder: (controller) {
+                    return  Text(
+                      controller.scannedBarCode,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(color: Colors.white),
+                    );;
+                  }
+                ),
+                SizedBox(height: Dimension.height10 * 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(onPressed: (){
+                      Get.back();
+                    },
+                        child: Text("Cancle",style: TextStyle(color: Colors.white,fontSize: Dimension.height10*2),)),
+                    SizedBox(
+                      height: Dimension.height10*4,
+        
+                      child: GetBuilder<CardAddController>(
+                        builder: (controller) {
+                          return ElevatedButton(
+                              onPressed: () {
+                                Get.offNamed(RouteHelper.getCardAdd());
+                              },
+                              style: ElevatedButton.styleFrom(),
+                              child: Text(controller.isScanning?"Enter Manually":"Submit"));
+                        }
+                      ),
+                    )
+        
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

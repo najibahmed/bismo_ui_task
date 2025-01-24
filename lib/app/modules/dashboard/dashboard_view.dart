@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/card_model.dart';
 import 'package:loyality_card_wallet/app/helper/data.dart';
 import 'package:loyality_card_wallet/app/modules/dashboard/dashboard_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
@@ -8,6 +9,8 @@ import 'package:loyality_card_wallet/app/utils/app_images.dart';
 import 'package:loyality_card_wallet/app/utils/dimension.dart';
 import 'package:loyality_card_wallet/app/widgets/giftCardItem.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../widgets/item_search_Delegate.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -40,8 +43,9 @@ class DashboardView extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                 return Giftcarditem(img: AppImages().starBucks, index: index);},
-              childCount: 6,
+                CardModel cardModel=couponListData[index];
+                 return Giftcarditem(cardModel: cardModel,index: index);},
+              childCount: couponListData.length,
             )
           ),
         );
@@ -107,7 +111,13 @@ class DashboardView extends StatelessWidget {
         ),
         Spacer(),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(RouteHelper.searchView);
+              // showSearch(
+              //     context: Get.context!,
+              //     delegate: ItemSearchDelegate(),
+              // );
+            },
             icon: Icon(
               Icons.search,
               color: Colors.black54,

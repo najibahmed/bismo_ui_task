@@ -24,6 +24,7 @@ class CardAddController extends GetxController{
   }
   void setControllerData(){
     _scannedStringBarCode=_memberIdController.text.toString();
+    _memberIdController.clear();
     update();
   }
 
@@ -69,6 +70,10 @@ String generateBarCode(String barcodeData ){
 return svg;
 }
 
-
+@override
+  void onClose() {
+    // TODO: implement onClose
+    _memberIdController.dispose();
+  }
 
 }

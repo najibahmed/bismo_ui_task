@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/card_model.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/dimension.dart';
 import 'package:loyality_card_wallet/app/widgets/big_text.dart';
@@ -8,16 +9,15 @@ import 'package:loyality_card_wallet/app/widgets/small_text.dart';
 import '../utils/colors.dart';
 
 class Giftcarditem extends StatelessWidget {
-  final String img;
+  final CardModel cardModel;
   final int index;
-
-  const Giftcarditem({super.key, required this.img, required this.index});
+  const Giftcarditem({super.key, required this.cardModel,required this.index});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteHelper.getCardAdd());
+        Get.toNamed(RouteHelper.getCardAdd(),arguments:cardModel );
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: Dimension.height10 / 2),
@@ -44,7 +44,7 @@ class Giftcarditem extends StatelessWidget {
                         child: Container(
                           color: Colors.white,
                           child: Image.asset(
-                            img,
+                            cardModel.image!,
                             width: Dimension.height10 * 7,
                             height: Dimension.height10 * 7,
                             fit: BoxFit.cover,
@@ -58,12 +58,12 @@ class Giftcarditem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BigText(
-                            text: "StarBucks",
+                            text: cardModel.title!,
                             size: Dimension.height10 * 2.5,
                           ),
                           SizedBox(height: Dimension.height10),
                           SmallText(
-                            text: "Coupon Card",
+                            text: cardModel.cardType!,
                             size: 16,
                             color: Colors.black87,
                           ),
