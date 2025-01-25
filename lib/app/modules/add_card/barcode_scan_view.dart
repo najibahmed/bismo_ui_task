@@ -105,7 +105,8 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
                         builder: (controller) {
                           return ElevatedButton(
                               onPressed: () {
-                                Get.offNamed(RouteHelper.getCardAdd());
+                                Get.back();
+                                // Get.offNamed(RouteHelper.getCardAdd());
                               },
                               style: ElevatedButton.styleFrom(),
                               child: Text(controller.isScanning?"Enter Manually":"Submit"));

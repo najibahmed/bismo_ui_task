@@ -43,9 +43,9 @@ class DashboardView extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                CardModel cardModel=couponListData[index];
+                CardModel cardModel=cardJsonItems.map((item)=>CardModel.fromJson(item)).toList()[index];
                  return Giftcarditem(cardModel: cardModel,index: index);},
-              childCount: couponListData.length,
+              childCount: cardJsonItems.length,
             )
           ),
         );

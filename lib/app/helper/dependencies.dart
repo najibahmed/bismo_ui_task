@@ -8,9 +8,9 @@ Future<void>init()async{
 
 
   Get.put(DashboardController());
-  // Get.put(CardAddController());
+  Get.put(CardAddController());
   // Get.lazyPut(()=>DashboardController());
-  Get.lazyPut(()=>CardAddController());
+  // Get.lazyPut(()=>CardAddController());
 
 
 }

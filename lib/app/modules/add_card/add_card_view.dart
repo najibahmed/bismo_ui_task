@@ -20,7 +20,8 @@ class CardAddView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          Get.offNamed(RouteHelper.getInitial());
+          // Get.offNamed(RouteHelper.getInitial());
+          Get.back();
         }, icon: const Icon(Icons.arrow_back)),
       ),
       body: SingleChildScrollView(

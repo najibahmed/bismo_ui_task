@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loyality_card_wallet/app/card_model.dart';
+import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/dimension.dart';
 import 'package:loyality_card_wallet/app/widgets/big_text.dart';
@@ -47,7 +48,7 @@ class Giftcarditem extends StatelessWidget {
                             cardModel.image!,
                             width: Dimension.height10 * 7,
                             height: Dimension.height10 * 7,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
                       ),
@@ -74,17 +75,21 @@ class Giftcarditem extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: 5,
-              right: 8,
-              child: Container(
-                height: Dimension.height10 * 2.5,
-                width: Dimension.height10 * 2.5,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.red),
-              child: const Center(child: Text('1',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
-              ),
+            GetBuilder<CardAddController>(
+              builder: (controller) {
+                return cardModel.quantity!<1?SizedBox():Positioned(
+                  top: 5,
+                  right: 8,
+                  child: Container(
+                    height: Dimension.height10 * 2.5,
+                    width: Dimension.height10 * 2.5,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.red),
+                  child: const Center(child: Text('1',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+                  ),
+                );
+              }
             )
           ],
         ),

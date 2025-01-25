@@ -24,12 +24,13 @@ class _SearchViewState extends State<SearchView> {
   void initState() {
     super.initState();
     // Initialize the filtered list to display all items
-    _filteredItems = couponListData;
+    _filteredItems = cardJsonItems.map((item)=>CardModel.fromJson(item)).toList();
   }
 
   // Function to filter the list based on the search query
   void _filterItems(String query) {
-    final filtered = couponListData
+    final searchList=cardJsonItems.map((item)=>CardModel.fromJson(item)).toList();
+    final filtered = searchList
         .where((item) => item.title!.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
@@ -45,12 +46,12 @@ class _SearchViewState extends State<SearchView> {
           child: Center(
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            SizedBox(height: Dimension.height10*3,),
             searchHeader(),
             SizedBox(height: 6,),
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: EdgeInsets.symmetric(horizontal: Dimension.height10*2.5),
                 child: _filteredItems.isEmpty
                     ? Center(
                   child: Text(
@@ -71,8 +72,8 @@ class _SearchViewState extends State<SearchView> {
                           Get.toNamed(RouteHelper.getCardAdd(),arguments:itemCard );
                         },
                         leading: SizedBox(
-                          height: 40,
-                          width: 40,
+                          height: Dimension.height10*4,
+                          width: Dimension.width10*4,
                           child: Image.asset(itemCard.image!),
                         ),
                         title: Text(itemCard.title!),
@@ -98,6 +99,7 @@ class _SearchViewState extends State<SearchView> {
           child: TextField(
             onChanged: (value) => _filterItems(value),
               decoration: const InputDecoration(
+                isDense: true,
                   labelText: "Search",
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
