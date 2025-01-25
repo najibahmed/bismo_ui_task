@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loyality_card_wallet/app/card_model.dart';
+import 'package:loyality_card_wallet/app/models/card_model.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/app_images.dart';
@@ -20,8 +20,8 @@ class CardAddView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          // Get.offNamed(RouteHelper.getInitial());
-          Get.back();
+          Get.offNamed(RouteHelper.getInitial());
+          // Get.back();
         }, icon: const Icon(Icons.arrow_back)),
       ),
       body: SingleChildScrollView(

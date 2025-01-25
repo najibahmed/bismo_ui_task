@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loyality_card_wallet/app/card_model.dart';
+import 'package:loyality_card_wallet/app/models/card_model.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 
 import '../../helper/data.dart';

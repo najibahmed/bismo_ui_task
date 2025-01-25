@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:loyality_card_wallet/app/card_model.dart';
+import 'package:loyality_card_wallet/app/models/card_model.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/add_card_view.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/barcode_scan_view.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/successful_card_add_view.dart';

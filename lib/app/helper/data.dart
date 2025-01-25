@@ -1,4 +1,4 @@
-import 'package:loyality_card_wallet/app/card_model.dart';
+import 'package:loyality_card_wallet/app/models/card_model.dart';
 import 'package:loyality_card_wallet/app/utils/app_images.dart';
 
 List<String> sliderCardImages = [
