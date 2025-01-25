@@ -10,7 +10,6 @@ import 'package:loyality_card_wallet/app/utils/dimension.dart';
 import 'package:loyality_card_wallet/app/widgets/giftCardItem.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../widgets/item_search_Delegate.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});

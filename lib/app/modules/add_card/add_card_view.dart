@@ -87,7 +87,7 @@ class CardAddView extends StatelessWidget {
                         onPressed: () {
                           if (controller.memberIdController.text.isNotEmpty) {
                             controller.setControllerData();
-                            Get.toNamed(RouteHelper.getSuccessfulCardView());
+                            Get.toNamed(RouteHelper.getSuccessfulCardView(),arguments: cardModel);
                           }else{
                             Get.snackbar("Empty Data", "No Coupon Code is given!",backgroundColor: Colors.redAccent.shade100);
                           }

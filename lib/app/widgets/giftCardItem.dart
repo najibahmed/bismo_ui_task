@@ -86,7 +86,7 @@ class Giftcarditem extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         color: Colors.red),
-                  child: const Center(child: Text('1',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+                  child:  Center(child: Text(cardModel.quantity!.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
                   ),
                 );
               }

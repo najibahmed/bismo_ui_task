@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:loyality_card_wallet/app/card_model.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/utils/app_images.dart';
@@ -15,7 +16,7 @@ class SuccessfulCardAddView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final CardModel cardModel= Get.arguments;
     return  Scaffold(
       backgroundColor: AppColor.greenBackground,
       body: SafeArea(
@@ -29,7 +30,7 @@ class SuccessfulCardAddView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(onPressed: (){
-                      Get.offNamed(RouteHelper.getCardAdd());
+                      Get.offNamed(RouteHelper.getCardAdd(),arguments: cardModel);
                     },
                         icon: Icon(Icons.arrow_back,
                           color: Colors.white,
@@ -98,7 +99,7 @@ class SuccessfulCardAddView extends StatelessWidget {
                         child: Container(
                           color: Colors.white,
                           child: Image.asset(
-                            AppImages.instance.starBucks,
+                            cardModel.image!,
                             width: Dimension.height10 * 5,
                             height: Dimension.height10 * 5,
                             fit: BoxFit.cover,
@@ -112,13 +113,13 @@ class SuccessfulCardAddView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BigText(
-                          text: "StarBucks",
+                          text: cardModel.title!,
                           size: Dimension.height10 * 1.5,
                           color: Colors.white,
                         ),
                         SizedBox(height:4),
                         SmallText(
-                          text: "Coupon Card",
+                          text: cardModel.cardType!,
                           size: 12,
                           color: Colors.white,
                         ),
@@ -132,7 +133,8 @@ class SuccessfulCardAddView extends StatelessWidget {
                   width: Dimension.width10*20,
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.offNamed(RouteHelper.getCardAdd());
+                        // Get.back();
+                        // Get.offNamed(RouteHelper.initial);
                       },
                       style: ElevatedButton.styleFrom(),
                       child: const Text("Continue")),
