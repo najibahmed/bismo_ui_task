@@ -15,26 +15,20 @@ class BarcodeScanView extends StatefulWidget {
 }
 
 class _BarcodeScanViewState extends State<BarcodeScanView> {
-
-  Widget _buildBarcode(Barcode? value) {
-    if (value == null) {
-      return const Text(
-        'Place Camera to Scan!',
-        overflow: TextOverflow.fade,
-        style: TextStyle(color: Colors.white),
-      );
-    }
-    return Text(
-      value.displayValue ?? 'No display value.',
-      overflow: TextOverflow.fade,
-      style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 18),
-    );
-  }
+  final MobileScannerController _controller = MobileScannerController();
 
   void _handleBarcode(BarcodeCapture barcodes) {
     if (mounted) {
       Get.find<CardAddController>().setScanBarCode(barcodes);
       }
+      final List<Barcode> codeBar = barcodes.barcodes;
+      for (final barcode in codeBar) {
+        debugPrint('Barcode found: ${barcode.rawValue}');
+        if (barcode.rawValue != null) {
+          _showBarcodeDialog(barcode.rawValue!);
+        }
+      }
+
 
   }
   @override
@@ -75,6 +69,7 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
                     borderRadius: BorderRadius.circular(30),
                     child: MobileScanner(
                       onDetect: _handleBarcode,
+
                     ),
                   ),
                 ),
@@ -87,7 +82,47 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
                       controller.scannedBarCode,
                       overflow: TextOverflow.fade,
                       style: TextStyle(color: Colors.white),
-                    );;
+                    );
+                  }
+                ),
+                GetBuilder<CardAddController>(
+                    builder: (controller) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            '0%',
+                            overflow: TextOverflow.fade,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                          Obx(()=> Expanded(
+                            child: Slider(
+                              max: 100,
+                              divisions: 10,
+                              label: controller.zoomLevel.value.round().toString(),
+                                value: controller.zoomLevel.value,
+                                onChanged: (value) {
+                                  controller.zoomLevel.value = value;
+                                  _controller.setZoomScale(value);
+                                },
+                              ),
+                          ),
+                          ),
+                          Text(
+                            '100%',
+                            overflow: TextOverflow.fade,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 ),
                 SizedBox(height: Dimension.height10 * 10),
@@ -121,6 +156,23 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
           ),
         ),
       ),
+    );
+  }
+  void _showBarcodeDialog(String barcode) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Barcode Detected'),
+          content: Text(barcode),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

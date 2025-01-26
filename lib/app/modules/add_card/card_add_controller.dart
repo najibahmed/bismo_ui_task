@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 
@@ -16,6 +17,9 @@ class CardAddController extends GetxController{
   bool _isScanning =true;
   bool get isScanning =>_isScanning;
   String get scannedBarCode=>_scannedStringBarCode;
+  RxDouble zoomLevel = 0.4.obs;
+
+
 
   void resetBarCode(){
     _isScanning=true;
@@ -39,27 +43,6 @@ class CardAddController extends GetxController{
   }
 
 
-  // String _scannedBarcode = "No barcode scanned";
-  // String get scannedBarCode=>_scannedBarcode;
-
-  // Future<void> scanBarcode() async {
-  //   String scannedBarcode;
-  //   try {
-  //     // scannedBarcode = await FlutterBarcodeScanner.scanBarcode(
-  //     //   '#ff6666', // Scan line color
-  //     //   'Cancel',  // Cancel button text
-  //     //   true,      // Show the flash button
-  //     //   ScanMode.BARCODE, // Scan mode
-  //     );
-  //   } catch (e) {
-  //     scannedBarcode = 'Failed to get barcode';
-  //   }
-  //
-  //    return;
-  //
-  //     _scannedBarcode = scannedBarcode;
-  //     update();
-  // }
 
 String generateBarCode(String barcodeData ){
   final svg = _barcode.toSvg(

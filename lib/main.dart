@@ -4,6 +4,7 @@ import 'package:loyality_card_wallet/app/modules/dashboard/dashboard_controller.
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
 import 'package:loyality_card_wallet/app/helper/dependencies.dart.' as dep;
 
+
 void main() async{
   runApp(const MyApp());
   await dep.init();
