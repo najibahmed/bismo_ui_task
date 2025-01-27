@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loyality_card_wallet/app/modules/add_card/card_add_controller.dart';
 import 'package:loyality_card_wallet/app/route/route_helper.dart';
+import 'package:loyality_card_wallet/app/widgets/small_text.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../utils/dimension.dart';
@@ -13,29 +14,36 @@ class BarcodeScanView extends StatefulWidget {
   @override
   State<BarcodeScanView> createState() => _BarcodeScanViewState();
 }
-
 class _BarcodeScanViewState extends State<BarcodeScanView> {
-
-  Widget _buildBarcode(Barcode? value) {
-    if (value == null) {
-      return const Text(
-        'Place Camera to Scan!',
-        overflow: TextOverflow.fade,
-        style: TextStyle(color: Colors.white),
-      );
-    }
-    return Text(
-      value.displayValue ?? 'No display value.',
-      overflow: TextOverflow.fade,
-      style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 18),
-    );
-  }
+   final MobileScannerController _controller= MobileScannerController();
 
   void _handleBarcode(BarcodeCapture barcodes) {
     if (mounted) {
       Get.find<CardAddController>().setScanBarCode(barcodes);
       }
-
+    final List<Barcode> barcodeData = barcodes.barcodes;
+    for (final barcode in barcodeData) {
+      debugPrint('Barcode found: ${barcode.rawValue}');
+      if (barcode.rawValue != null) {
+        _stopScanning(barcode.rawValue!);
+        break;
+      }
+      break ;
+    }
+  }
+   void _stopScanning(String barcode) {
+     _controller.stop(); // Stop scanning
+     _showBarcodeDialog(barcode);
+   }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    Get.find<CardAddController>().zoomLevel.value =  0.2;
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -48,7 +56,7 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: Dimension.height10 * 10),
+                SizedBox(height: Dimension.height10 * 5),
                 Container(
                   height: Dimension.height10 * 8,
                   width: Dimension.height10 * 8,
@@ -62,7 +70,7 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
                   size: Dimension.height10 * 2.65,
                   color: Colors.white,
                 ),
-                SizedBox(height: Dimension.height10 * 3),
+                SizedBox(height: Dimension.height10 * 2),
                 Container(
                   height: Dimension.height10 * 30,
                   width: double.maxFinite,
@@ -75,41 +83,110 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
                     borderRadius: BorderRadius.circular(30),
                     child: MobileScanner(
                       onDetect: _handleBarcode,
+                      controller: _controller,
                     ),
                   ),
                 ),
                 SizedBox(height: Dimension.height10),
                 BigText(text: "Place your BarCode Inside the Camera Window.",color: Colors.white,size: 14,),
-                SizedBox(height: Dimension.height10 * 5),
+                SizedBox(height: Dimension.height10 * 3),
                 GetBuilder<CardAddController>(
                   builder: (controller) {
                     return  Text(
                       controller.scannedBarCode,
                       overflow: TextOverflow.fade,
-                      style: TextStyle(color: Colors.white),
-                    );;
+                      style: const TextStyle(color: Colors.white),
+                    );
                   }
                 ),
-                SizedBox(height: Dimension.height10 * 10),
+                GetBuilder<CardAddController>(
+                    builder: (controller) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              '0%',
+                              overflow: TextOverflow.fade,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                            Obx(()=> Expanded(
+                              child: Slider(
+                                max: 1.0,
+                                // divisions: 0.1,
+                                label: controller.zoomLevel.value.round().toString(),
+                                value: controller.zoomLevel.value,
+                                onChanged: (value) {
+                                  controller.zoomLevel.value = value;
+                                  setState(() {
+                                  _controller.setZoomScale(value);
+                                  });
+                                },
+                              ),
+                            ),
+                            ),
+                            Text(
+                              '100%',
+                              overflow: TextOverflow.fade,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ),
+                SizedBox(height: Dimension.height10 * 2),
+                SizedBox(
+                  height: Dimension.height10*4,
+
+                  child: GetBuilder<CardAddController>(
+                      builder: (controller) {
+                        return controller.isScanning?SizedBox():ElevatedButton(
+                            onPressed: () {
+                              _controller.start();
+                              controller.resetScanning();// Restart scanning
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white24
+                            ),
+                            child: const Text("Restart Scanning",style:TextStyle(color: Colors.white),));
+                      }
+                  ),
+                ),
+                SizedBox(height: Dimension.height10*2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(onPressed: (){
-                      Get.back();
-                    },
-                        child: Text("Cancle",style: TextStyle(color: Colors.white,fontSize: Dimension.height10*2),)),
+                    GetBuilder<CardAddController>(
+                      builder: (controller) {
+                        return TextButton(onPressed: (){
+                          controller.enterManually();
+                          Get.back();
+                        },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white24
+                            ),
+                            child: Text("Enter Manually",style: TextStyle(color: Colors.white,fontSize: Dimension.height10*1.5),));
+                      }
+                    ),
                     SizedBox(
                       height: Dimension.height10*4,
         
                       child: GetBuilder<CardAddController>(
                         builder: (controller) {
-                          return ElevatedButton(
+                          return controller.isScanning?SizedBox():ElevatedButton(
                               onPressed: () {
                                 Get.back();
                                 // Get.offNamed(RouteHelper.getCardAdd());
                               },
                               style: ElevatedButton.styleFrom(),
-                              child: Text(controller.isScanning?"Enter Manually":"Submit"));
+                              child: Text("Submit"));
                         }
                       ),
                     )
@@ -121,6 +198,26 @@ class _BarcodeScanViewState extends State<BarcodeScanView> {
           ),
         ),
       ),
+    );
+  }
+  void _showBarcodeDialog(String barcode) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: BigText(text: 'Barcode Detected'),
+          content: Container(
+              padding: const EdgeInsets.all(5),
+              color: Theme.of(context).highlightColor,
+              child: SmallText(text: barcode,size: 18,color: Colors.black87,)),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

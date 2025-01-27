@@ -16,6 +16,12 @@ class CardAddController extends GetxController{
   bool _isScanning =true;
   bool get isScanning =>_isScanning;
   String get scannedBarCode=>_scannedStringBarCode;
+  RxDouble zoomLevel = 0.2.obs;
+
+  void resetScanning(){
+    _isScanning=!_isScanning;
+    update();
+  }
 
   void resetBarCode(){
     _isScanning=true;
@@ -31,14 +37,18 @@ class CardAddController extends GetxController{
   void setScanBarCode(BarcodeCapture barcodes){
     _scanBarcode=barcodes.barcodes.firstOrNull;
     _isScanning=false;
-   if(_scanBarcode?.displayValue!=null) {
+   if(_scanBarcode?.displayValue != null) {
      _scannedStringBarCode= _scanBarcode!.displayValue.toString();
       _memberIdController.text = _scanBarcode!.displayValue.toString();
     }
     update();
   }
 
-
+void enterManually(){
+  _scannedStringBarCode= _scannedStringBarCode="No barcode scanned";
+  _memberIdController.clear();
+  update();
+}
   // String _scannedBarcode = "No barcode scanned";
   // String get scannedBarCode=>_scannedBarcode;
 
