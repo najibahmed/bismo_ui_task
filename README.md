@@ -10,10 +10,12 @@ A Flutter App that Display Gift Cards and Loyality Cards with store name, barcod
 - Search Card by title
 - Cross platform
 - Colorful Ui
+- Getx StateManagement
 
 
 ## Screenshots
-
+![Image](https://github.com/user-attachments/assets/6a8c5d9d-ca04-4d62-9d40-277ddd2b8303)
+![Image](https://github.com/user-attachments/assets/744e3f02-55f9-4005-a679-f3f22a523087)
 ![App Screenshot](https://github.com/user-attachments/assets/ea3b1c46-5d28-4208-9a9c-df950e3c925b)
 ![App Screenshot](https://github.com/user-attachments/assets/99b27d1d-81e2-4b3b-9836-81b540cb6c8e)
 ![App Screenshot](https://github.com/user-attachments/assets/39c8f8b4-a442-44f6-840e-3a13c0360028)
